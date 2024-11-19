@@ -15,7 +15,7 @@ fin_Path = "TrainingData_fin"
 
 class BaseDataReader(object):
     @classmethod
-    def run(cls, idx=range(1, 18), freq=10):
+    def run(cls, idx = range(1, 18), freq=10):
         if isinstance(idx, Iterable):
             qbar = tqdm(idx, desc="Reading data")
             for i in qbar:
@@ -23,10 +23,13 @@ class BaseDataReader(object):
         else:
             cls()._work_flow(idx, freq)
 
-    def _work_flow(self, id, freq=10, verbose=True):
+    def init(self, id, freq, verbose):
         self.name = id
         self.freq = freq
         self.verbose = verbose
+
+    def _work_flow(self, id, freq=10, verbose=True):
+        self.init(id, freq, verbose)
 
         self._read_data()
         self._col_augmentation()
