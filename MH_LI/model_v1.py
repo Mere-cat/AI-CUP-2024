@@ -32,7 +32,7 @@ class Model(L.LightningModule):
         y_hat = self(x, edge_index)
         y = batch.y
         loss = nn.L1Loss()(y_hat[batch.mask], y[batch.mask])
-        self.log('train_loss', loss, prog_bar=True)
+        self.log('train_loss', torch.round(loss, decimals=3), prog_bar=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -40,7 +40,7 @@ class Model(L.LightningModule):
         y_hat = self(x, edge_index)
         y = batch.y
         loss = nn.L1Loss()(y_hat, y)
-        self.log('val_loss', loss, prog_bar=True)
+        self.log('val_loss', torch.round(loss, decimals=3), prog_bar=True)
 
     def configure_optimizers(self):
         return torch.optim.AdamW(self.parameters(), lr=1e-3)
@@ -58,4 +58,4 @@ if __name__ == "__main__":
                 val_dataloaders=DataLoader(GraphDataset(), batch_size=1, shuffle=False),
                 )
 
-    trainer.test(cfg_path="best", test_dataloaders=DataLoader(GraphDataset(), batch_size=1, shuffle=False))
+    trainer.test(ckpt_path="best", test_dataloaders=DataLoader(GraphDataset(), batch_size=1, shuffle=False))
