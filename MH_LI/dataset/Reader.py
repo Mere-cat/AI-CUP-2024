@@ -17,7 +17,6 @@ def col_normalizeScale(df):
         df.loc[: col] *=  scale
     return df
 
-
 class DataReader(BaseDataReader):
     """
     - 'Pressure' augmentation:
@@ -30,10 +29,12 @@ class DataReader(BaseDataReader):
         df = somethings
         return df
     """
+    def windspeed(self, df_col):
+        return df_col.astype(float)
 
     def augmentation(self, df):
         normalizer = normalizeScale
-        df = normalizer(df)
+        df.iloc[:, df.columns != "Power"] = normalizer(df.iloc[:, df.columns != "Power"])
         return df
 
 if __name__ == "__main__":
