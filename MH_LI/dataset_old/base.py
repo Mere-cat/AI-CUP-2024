@@ -78,7 +78,8 @@ class BaseDataReader(object):
         self.df['DateTime'] = pd.to_datetime(self.df['DateTime'])
         self.df.set_index('DateTime', inplace=True)
 
-        df_resampled = self.df.resample(f'{freq}min').sum()#.apply(lambda x: np.sum(x.values))
+        df_resampled = self.df.resample(f'{freq}min').mean()#.apply(lambda x: np.sum(x.values))
+        df_resampled = df_resampled.between_time('09:00', '17:00')
         df_resampled.reset_index(inplace=True)
         self.df = df_resampled
 
