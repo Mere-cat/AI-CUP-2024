@@ -10,7 +10,7 @@ dataPath = os.path.join(os.sep, *dataPath, "data")
 class XGBPredict(BasePredict):
     def __init__(self, col, pred, station_name=3, sampler=None, test_size=0.4, device="cpu", alpha=0.6, beta=0.4, parms=None):
         super().__init__(col, pred, station_name, sampler, test_size, device, alpha, beta, parms)
-        self.multi_strategy = "multi_output_tree" if isinstance(pred, list) and len(pred) > 1 else "single_output"
+        self.multi_strategy = "multi_output_tree" if isinstance(pred, list) and len(pred) > 1 else "one_output_per_tree"
 
     def train(self, train_x, train_y, valid_x, valid_y, parms):
         model = xgb.XGBRegressor(early_stopping_rounds=early_stop, **parms)
@@ -69,8 +69,8 @@ class XGBPredict(BasePredict):
 
 
 if __name__ == "__main__":
-    col = ["Date", "Month", "Day", "Hour", "high", "ele", "sum_ele", "sum_pos"]
-    pred = ["Sunlight", "Power"]
+    col = ["Date", "Month", "Day", "Hour", "high", "ele", "sum_ele", "sum_pos", "Sunlight_hat", "Power_hat"]
+    pred = ["Sunlight"]
     stat_name = "GlobalSolarRadiation"
 
     read_path = "TrainingData_fin"
@@ -79,9 +79,9 @@ if __name__ == "__main__":
     save_path = "TrainingData_hat"
     save_file = "_Train_hat"
 
-    best = {'n_estimators': 1100, 'booster': 'gbtree', 'lambda': 4.3068541065394286e-05, 'alpha': 0.0001857921691910933, 'gamma': 9.282246222925262e-06, 'subsample': 0.473875190551955, 'colsample_bytree': 0.7683741287530078, 'max_depth': 6, 'min_child_weight': 6, 'eta': 0.2521224767188481, 'grow_policy': 'depthwise'}
+    #best = {'n_estimators': 1100, 'booster': 'gbtree', 'lambda': 4.3068541065394286e-05, 'alpha': 0.0001857921691910933, 'gamma': 9.282246222925262e-06, 'subsample': 0.473875190551955, 'colsample_bytree': 0.7683741287530078, 'max_depth': 6, 'min_child_weight': 6, 'eta': 0.2521224767188481, 'grow_policy': 'depthwise'}
 
-    early_stop = 50
-    model = XGBPredict(col, pred, parms=best)
+    early_stop = 100
+    model = XGBPredict(col, pred)
     model.fit()
 
