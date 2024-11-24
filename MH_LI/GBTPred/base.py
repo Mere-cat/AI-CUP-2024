@@ -25,8 +25,6 @@ early_stop = 50
 sampler = None
 #loss = "reg:squarederror"
 
-pred_name = ["Sunlight", "Power"]
-col = ["Date", "Month", "Day", "Hour", "high", "ele", "sum_ele", "sum_pos"]
 
 class BasePredict:
     def __init__(self, col, pred, station_name=3, sampler=None, test_size=0.4, device="cpu", alpha=0.6, beta=0.4, parms=None):
@@ -58,6 +56,7 @@ class BasePredict:
         train_df = pd.merge(self.full_df, self.station_df[["DateTime", value_name]], on=["DateTime"], how='left')
         train_df = pd.merge(train_df, self.geo_df[["ID", "lat", "lon"]], on=["ID"], how='left')
         train_df.dropna(inplace=True)
+        print(train_df.columns)
 
         self.x = train_df[self.col]
         self.y = train_df[self.pred]
@@ -115,9 +114,9 @@ class BasePredict:
         return pred
 
     def _predict_flow(self):
-        hat_name = [f"{hat}_hat" for hat in pred_name]
+        hat_name = [f"{hat}_hat" for hat in self.pred]
 
-        self.full_df[hat_name] = self.model.predict(self.full_df[col])
+        self.full_df[hat_name] = self.model.predict(self.full_df[self.col])
 
         for hat in hat_name:
             self.full_df[hat] = np.clip(self.full_df[hat], a_min=0, a_max=None)
