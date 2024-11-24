@@ -29,7 +29,7 @@ sampler = None
 class BasePredict:
     def __init__(self, col, pred, station_name=3, sampler=None, test_size=0.4, device="cpu", alpha=0.6, beta=0.4, parms=None):
         self.col = col
-        self.pred = pred
+        self.pred = [pred] if isinstance(pred, str) else str
         self.station_name = station_name
         self.Sampler = sampler
 
@@ -115,8 +115,9 @@ class BasePredict:
 
     def _predict_flow(self):
         hat_name = [f"{hat}_hat" for hat in self.pred]
-
-        self.full_df[hat_name] = self.model.predict(self.full_df[self.col])
+        print(self.full_df[hat_name].shape)
+        print(self.model.predict(self.full_df[self.col]).shape)
+        self.full_df[hat_name] = self.model.predict(self.full_df[self.col]).reshape(-1, len(self.pred))
 
         for hat in hat_name:
             self.full_df[hat] = np.clip(self.full_df[hat], a_min=0, a_max=None)
