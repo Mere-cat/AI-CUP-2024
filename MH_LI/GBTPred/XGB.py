@@ -14,7 +14,7 @@ class XGBPredict(BasePredict):
 
     def train(self, train_x, train_y, valid_x, valid_y, parms):
         model = xgb.XGBRegressor(early_stopping_rounds=early_stop, **parms)
-        model.fit(train_x, train_y, eval_set=[(valid_x, valid_y)], verbose=False)
+        model.fit(train_x, train_y, eval_set=[(valid_x, valid_y)], verbose=True)
         return model
 
     def read(self, idx):
@@ -79,7 +79,9 @@ if __name__ == "__main__":
     save_path = "TrainingData_hat"
     save_file = "_Train_hat"
 
+    best = {'n_estimators': 1100, 'booster': 'gbtree', 'lambda': 4.3068541065394286e-05, 'alpha': 0.0001857921691910933, 'gamma': 9.282246222925262e-06, 'subsample': 0.473875190551955, 'colsample_bytree': 0.7683741287530078, 'max_depth': 6, 'min_child_weight': 6, 'eta': 0.2521224767188481, 'grow_policy': 'depthwise'}
+
     early_stop = 50
-    model = XGBPredict(col, pred)
+    model = XGBPredict(col, pred, parms=best)
     model.fit()
 

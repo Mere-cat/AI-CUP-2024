@@ -53,6 +53,8 @@ class BasePredict:
         self.full_df["DateTime"] = pd.to_datetime(self.full_df["DateTime"])
         self.station_df["DateTime"] = pd.to_datetime(self.station_df["DateTime"])
 
+        self.full_df = self.full_df[(self.full_df["DateTime"].dt.hour >= 9) & (self.full_df["DateTime"].dt.hour < 17)]
+
         train_df = pd.merge(self.full_df, self.station_df[["DateTime", value_name]], on=["DateTime"], how='left')
         train_df = pd.merge(train_df, self.geo_df[["ID", "lat", "lon"]], on=["ID"], how='left')
         train_df.dropna(inplace=True)
@@ -80,7 +82,7 @@ class BasePredict:
 
             print("Best trial parameters:", self.parms)
 
-        self.train()
+        self._train()
         self._predict_flow()
 
     def fit(self):
@@ -99,7 +101,7 @@ class BasePredict:
            self.model = model
         return model.predict(valid_x)
 
-    def _train(self, verbose=False):
+    def _train(self, verbose=True):
         train_x, valid_x, train_y, valid_y = self.split_data(self.x, self.y)
 
         best_parm = self.parms if self.parms is not None else {}
@@ -161,9 +163,8 @@ class BasePredict:
         mae_baseline = mean_absolute_error(valid_y, [valid_y.mean()] * len(valid_y))
         return self.alpha * (1 - r2) + self.beta * (mae / mae_baseline)
 
-    @staticmethod
-    def grouby_save(df):
-        _save = lambda x: x.to_csv(f"data/TrainingData_hat/L{x['ID'].iloc[0]}_Train_hat.csv", index=False)
-        return df.groupby("ID").apply(_save, include_groups=True)
+
+    def grouby_save(self, df):
+        return df.groupby("ID").apply(self.save, include_groups=True)
 
 
