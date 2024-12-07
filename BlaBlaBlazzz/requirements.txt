@@ -1,6 +1,4 @@
-scikit-learn
-optuna
-numpy
-pandas
-pathlib
-DateTime
+scikit-learn>=1.5.1
+optuna>=4.1.0
+numpy>=1.26.4
+pandas>=2.2.2
