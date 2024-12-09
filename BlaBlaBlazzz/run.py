@@ -312,13 +312,14 @@ class RunModel:
             # display(X_test)
 
         self.save_results(result)
-        print("All questions finished, Total MSE: {} | Total MAE: {}".format(total_mse, total_mae))
+        print("\nAll questions finished, Total MSE: {} | Total MAE: {}".format(total_mse, total_mae))
+        print("Save results at answer.csv")
         
 
     def save_results(self, result):
-        upload = self.dir + "/results/uploads.csv"
+        upload = pd.read_csv(self.dir + "/results/upload.csv")
         upload['答案'] = result
-        upload.to_csv(self.dir + "/results/upload_v15.csv", index=False)
+        upload.to_csv(self.dir + "answer.csv", index=False)
 
 
 if __name__=='__main__':
