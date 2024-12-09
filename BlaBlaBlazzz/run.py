@@ -319,7 +319,7 @@ class RunModel:
     def save_results(self, result):
         upload = pd.read_csv(self.dir + "/results/upload.csv")
         upload['答案'] = result
-        upload.to_csv(self.dir + "answer.csv", index=False)
+        upload.to_csv(self.dir + "/answer.csv", index=False)
 
 
 if __name__=='__main__':
