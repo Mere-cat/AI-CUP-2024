@@ -1,13 +1,13 @@
-# 預測發電量競賽 (AI CUP 2024)
+# 根據區域微氣候資料預測發電量競賽 (AI CUP 2024)
 ## 📚目錄
 <details open>
 <summary> 目錄 </summary>
 
-> ## [根據區域微氣候資料預測發電量競賽 (AI CUP 2024) 的競賽項目](https://tbrain.trendmicro.com.tw/Competitions/Details/36)
-> - ### 📝 [**競賽目標**](#競賽目標)
-> - ### 📦 [**資料格式**](#資料格式)
-> - ### 🧠 [**模型架構**](#模型架構)
-> - ### 💻 [**程式碼**](#程式碼)
+> 題目：[根據區域微氣候資料預測發電量競賽](https://tbrain.trendmicro.com.tw/Competitions/Details/36)
+> - 📝 [**競賽目標**](#競賽目標)
+> - 📦 [**資料格式**](#資料格式)
+> - 🧠 [**模型架構**](#模型架構)
+> - 💻 [**程式碼**](#程式碼)
 </details>
 
 
@@ -34,7 +34,6 @@
 > - `image_readme/` : readme 文件的圖片
 > - `other_works/` : 過去嘗試的資料整理與其他模型嘗試
 </details>
-
 
 
 ## 📝**競賽目標**
