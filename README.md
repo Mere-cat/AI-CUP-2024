@@ -27,6 +27,15 @@
 > - **Private**: 386003.4 **(4th)**
 </details>
 
+<details open>
+<summary> 資料夾目錄 </summary>
+
+> - `BlaBlaBlazzz/` : 主程式所在目錄
+> - `image_readme/` : readme 文件的圖片
+> - `other_works/` : 過去嘗試的資料整理與其他模型嘗試
+</details>
+
+
 
 ## 📝**競賽目標**
 <details open>
